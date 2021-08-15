@@ -4,7 +4,7 @@ div
   div(:style='color()')
   .hero
     h1 {{ recipe.name }}
-    .tag-container 
+    .tag-container-recipe 
       span.tag(v-for='tag in recipe.tags' @click='$router.push(`/recipes?tag=${tag}`)') {{ tag }}
   .recipe
     .detail
@@ -53,7 +53,7 @@ export default {
   width: 500px;
   margin-right: 50px;
 }
-.tag-container {
+.tag-container-recipe {
   text-transform: capitalize;
 }
 .tag {
