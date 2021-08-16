@@ -5,11 +5,7 @@ div
     .tag-container(v-if='isLoading')
       .placeholder-tag(v-for='i in 3')
     .tag-container(v-else)
-      span.tag--active(
-        v-for='tag in activeTags',
-        style='background-color: rgba(6, 89, 121, 0.8)',
-        @click='toggleTag(tag)'
-      ) {{ tag }}
+      span.tag--active(v-for='tag in activeTags', @click='toggleTag(tag)') {{ tag }}
       span.tag--inactive(v-for='tag in inactiveTags', @click='toggleTag(tag)') {{ tag }}
     .card-container(v-if='isLoading')
       .placeholder-card(v-for='i in 3')
@@ -133,6 +129,7 @@ export default {
   background-color: black;
   color: white;
   border: none;
+  background-color: rgba(6, 89, 121, 0.8);
 }
 
 .placeholder-card {
