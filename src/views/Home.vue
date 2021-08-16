@@ -145,7 +145,7 @@ export default {
   position: relative;
   overflow: hidden;
 }
-.placeholder-card::before {
+/* .placeholder-card::before {
   content: '';
   display: block;
   position: absolute;
@@ -156,7 +156,7 @@ export default {
   width: 160px;
   background: linear-gradient(to right, transparent 0%, #eeeded 50%, transparent 100%);
   animation: load 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
+} */
 .placeholder-tag {
   background-color: rgb(219, 219, 219);
   box-shadow: 0 4px 10px 0 rgb(231, 231, 231);
@@ -169,7 +169,7 @@ export default {
   position: relative;
   overflow: hidden;
 }
-.placeholder-tag::before {
+/* .placeholder-tag::before {
   content: '';
   display: block;
   position: absolute;
@@ -180,7 +180,7 @@ export default {
   width: 60px;
   background: linear-gradient(to right, transparent 0%, #eeeded 50%, transparent 100%);
   animation: load-tag 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
+} */
 @keyframes load {
   from {
     left: -150px;
