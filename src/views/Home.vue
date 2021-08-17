@@ -1,6 +1,5 @@
 <template lang='pug'>
 div
-  div(style='height: 35px')
   .center
     .tag-container(v-if='isLoading')
       .placeholder-tag(v-for='i in 3')
@@ -10,13 +9,8 @@ div
     .card-container(v-if='isLoading')
       .placeholder-card(v-for='i in 3')
     .card-container(v-else)
-      .card(
-        v-for='(item, index) in allFood',
-        :style='color()',
-        :key='index',
-        @click='$router.push(`/recipes/${item.slug}`)'
-      )
-        h2 {{ item.name }}
+      .card(v-for='(item, index) in allFood', :style='color()', :key='index', @click='test(item, $event)')
+        h2(@click.stop='') {{ item.name }}
 </template>
 
 <script>
@@ -72,6 +66,11 @@ export default {
       let hsla = `hsla(${~~(360 * Math.random())},90%,25%,0.8)`;
       return `background-color:${hsla}`;
     },
+    test(item, a) {
+      const style = a.originalTarget.attributes[1].nodeValue;
+      this.$store.dispatch('updateRecipeColor', style);
+      this.$router.push(`/recipes/${item.slug}`);
+    },
   },
 };
 </script>
@@ -79,7 +78,8 @@ export default {
 <style>
 .card {
   border-radius: 5px;
-  width: 160px;
+  min-width: 160px;
+  max-width: 160px;
   height: 160px;
   margin: 5px;
   padding: 5px;
@@ -106,7 +106,7 @@ export default {
 
 .tag-container {
   text-transform: capitalize;
-  margin-bottom: 16px;
+  margin: 16px 0px;
   max-width: 400px;
   display: flex;
   flex-wrap: wrap;
@@ -142,18 +142,6 @@ export default {
   position: relative;
   overflow: hidden;
 }
-/* .placeholder-card::before {
-  content: '';
-  display: block;
-  position: absolute;
-  left: -150px;
-  top: 0;
-  height: 100%;
-  border-radius: 15px;
-  width: 160px;
-  background: linear-gradient(to right, transparent 0%, #eeeded 50%, transparent 100%);
-  animation: load 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-} */
 .placeholder-tag {
   background-color: rgb(219, 219, 219);
   box-shadow: 0 4px 10px 0 rgb(231, 231, 231);
@@ -166,18 +154,6 @@ export default {
   position: relative;
   overflow: hidden;
 }
-/* .placeholder-tag::before {
-  content: '';
-  display: block;
-  position: absolute;
-  left: -60px;
-  top: 0;
-  height: 100%;
-  border-radius: 15px;
-  width: 60px;
-  background: linear-gradient(to right, transparent 0%, #eeeded 50%, transparent 100%);
-  animation: load-tag 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-} */
 @keyframes load {
   from {
     left: -150px;

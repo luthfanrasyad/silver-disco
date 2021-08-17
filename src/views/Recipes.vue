@@ -1,11 +1,10 @@
 <template lang="pug">
 div
-  //- input(type='number', v-model='portions')
   div(:style='color()')
   .hero
     h1 {{ recipe.name }}
     .tag-container-recipe 
-      span.tag(v-for='tag in recipe.tags' @click='$router.push(`/recipes?tag=${tag}`)') {{ tag }}
+      span.tag(v-for='tag in recipe.tags', @click='$router.push(`/recipes?tag=${tag}`)') {{ tag }}
   .recipe
     .detail
       p {{ recipe.description }}
@@ -19,6 +18,8 @@ div
 
 <script>
 import { getFoodBySlug } from '@/plugins/firestore';
+import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
@@ -27,13 +28,21 @@ export default {
       tags: {},
     };
   },
+  computed: {
+    ...mapGetters({
+      recipeColor: 'getRecipeColor',
+    }),
+  },
   async mounted() {
     this.recipe = await getFoodBySlug(this.$route.params.slug);
   },
   methods: {
     color() {
+      if (this.recipeColor) return `height: 200px ; ${this.recipeColor}`;
       let hsla = `hsla(${~~(360 * Math.random())},90%,25%,0.8)`;
-      return `height: 200px ; background-color:${hsla}`;
+      const style = `background-color:${hsla}`;
+      this.$store.dispatch('updateRecipeColor', style);
+      return `height: 200px ; ${style}`;
     },
   },
 };
@@ -43,10 +52,12 @@ export default {
 .hero {
   font-family: 'Poppins', sans-serif;
   margin: 20px;
+  margin-bottom: 10px;
 }
 .recipe {
   font-family: 'Poppins', sans-serif;
   margin: 20px;
+  margin-top: 0px;
   display: flex;
 }
 .detail {
