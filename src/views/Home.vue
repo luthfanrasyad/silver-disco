@@ -9,7 +9,7 @@ div
     .card-container(v-if='isLoading')
       .placeholder-card(v-for='i in 3')
     .card-container(v-else)
-      .card(v-for='(item, index) in allFood', :style='color()', :key='index', @click='test(item, $event)')
+      .card(v-for='(item, index) in allFood', :style='color(index)', :key='index', @click='test(item, $event)')
         h2 {{ item.name }}
 </template>
 
@@ -62,13 +62,13 @@ export default {
       this.$router.push({ query: { tag: filter.join('#') } });
       this.init();
     },
-    color() {
+    color(index) {
       let hsla = `hsla(${~~(360 * Math.random())},90%,25%,0.8)`;
+      this.allFood[index].color = `background-color:${hsla}`;
       return `background-color:${hsla}`;
     },
     test(item, a) {
-      const style = a.originalTarget.attributes[1].nodeValue;
-      this.$store.dispatch('updateRecipeColor', style);
+      this.$store.dispatch('updateRecipeColor', item.color);
       this.$router.push(`/recipes/${item.slug}`);
     },
   },
