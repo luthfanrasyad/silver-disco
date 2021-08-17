@@ -10,7 +10,7 @@ div
       .placeholder-card(v-for='i in 3')
     .card-container(v-else)
       .card(v-for='(item, index) in allFood', :style='color()', :key='index', @click='test(item, $event)')
-        h2(@click.stop='') {{ item.name }}
+        h2 {{ item.name }}
 </template>
 
 <script>
